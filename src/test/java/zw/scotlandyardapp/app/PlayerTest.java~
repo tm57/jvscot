@@ -1,0 +1,64 @@
+package zw.scotlandyardapp.app;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
+import org.junit.Test;
+
+public class PlayerTest {
+
+
+	@SuppressWarnings("static-access")
+	@Test
+	public void testGenerateMap() {
+		Player player = new Player();
+		player.generateTransportMode("london.map");
+		player.generateMap();
+		assertTrue("cannot be empty",player.getMap().size() > 0);
+		
+	}
+
+	@Test
+	public void testFindNextAll() {
+		Player player = new Player();
+		player.generateTransportMode("london.map");
+		player.generateMap();
+		player.setPosition(18);
+		ArrayList <Integer> flee1  = new ArrayList<Integer>();
+		flee1 = player.findNextAll("taxi");
+		assertTrue("cannot be less than 3",flee1.size() == 3);
+		for(Integer i: flee1){
+			assertTrue("options has to be one of 8,43 && 31",(i == 43 || i == 31 || i == 8));		
+		}
+		
+		
+		
+	}
+	
+	@Test
+	public void testMove() {
+		Player x = new Player();
+		x.generateTransportMode("london.map");
+		x.getMap();
+		x.setPosition(148);
+		x.move();
+		MisterX xx = new MisterX();
+		xx.setPosition(164);
+		xx.setPosition(149);
+		xx.setPosition(123);
+		x.move();
+		assertTrue("must be one of 164,123 or 149",(x.getPosition() == 164 || x.getPosition() == 123 || x.getPosition() == 149 ));
+		x.setBus(0);
+		x.setTaxi(0);
+		x.setSubway(0);
+		x.setPosition(1);
+		x.move();
+		assertEquals(1,x.getPosition());
+		
+	}
+	
+	
+
+
+}

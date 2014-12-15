@@ -1,0 +1,11 @@
+package zw.scotlandyardapp.app; 
+
+public class App {
+
+	public static void main(String[] args){	
+		
+		Game game  = new Game("london.map");
+		game.gameplay();	
+	}
+
+ }

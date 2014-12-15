@@ -1,0 +1,100 @@
+package zw.scotlandyardapp.app; 
+
+import java.util.ArrayList;
+import java.util.Vector;
+
+
+public class MisterX extends Player{
+	private int anyconnect;
+	public Vector<String> log;
+	
+	public MisterX(){
+		super();
+		this.anyconnect = 5;//black tokens
+		this.setRole("MisterX");
+		this.log = new Vector<String>();
+	}
+	
+	public void printLog(){
+		System.out.println("Mr .X's log:");
+		for(String i: log){
+			System.out.print(i+" ");
+		}
+		System.out.println("\n");
+	}
+	
+	public void move(){
+		ArrayList <Integer> flee1  = new ArrayList<Integer>();
+		ArrayList <Pair> options  = new ArrayList<Pair>();
+		ArrayList <Integer> flee2  = new ArrayList<Integer>();
+		ArrayList <Integer> flee0  = new ArrayList<Integer>();
+		ArrayList <Integer> flee3  = new ArrayList<Integer>();
+			flee0 = findNextAll("subway");
+			if(flee0.size() != 0){
+				for(Integer i: flee0){//excluding occupied positions
+					if(getMap().get(i).second.equals("detective")){
+						continue;
+					}else{
+						Pair pair = new Pair(i,"subway");
+						options.add(pair);
+					}
+				}
+			}
+	
+			
+			flee1 = findNextAll("bus");
+			if(flee1.size() != 0){
+				for(Integer i: flee1){//excluding occupied positions
+					if(getMap().get(i).second.equals("detective")){
+						continue;
+					}else{
+						Pair pair = new Pair(i,"bus");
+						options.add(pair);
+					}
+				}
+			}
+			
+			
+			flee2 = findNextAll("taxi");
+			if(flee2.size() > 0){
+				for(int i: flee2){//excluding occupied positions
+					if(getMap().get(i).second.equals("detective")){
+						continue;
+					}else{
+						Pair pair = new Pair(i,"taxi");
+						options.add(pair);
+					}
+				}
+			}
+		
+			int max = options.size();
+			Pair pos = new Pair(0,"");
+			if(max > 0){
+				Pair replace = new Pair(this.getPosition(),"vacant");
+				getMap().add(this.getPosition(), replace);//freeing current position
+				pos = options.get(randInt(0,max - 1));//randomly acquired new position
+				this.log.add(pos.second);//writing to log
+				this.setPosition(pos.first);//colonizing new node
+     			
+			}else {
+				flee3 = findNextAll("ferry");
+				if(flee3.size() > 0 && this.anyconnect > 0){
+					for(Integer i: flee3){//excluding occupied positions
+						if(getMap().get(i).second.equals("detective")){
+							continue;
+						}else{
+							Pair pair = new Pair(i,"black");
+							options.add(pair);
+						}
+					}
+						this.anyconnect-=1;
+						max = options.size();
+						Pair replace = new Pair(this.getPosition(),"vacant");
+						getMap().add(this.getPosition(), replace);//freeing current position
+						pos = options.get(randInt(0,max - 1));//randomly acquired new position
+						this.log.add("black");//writing to log
+						this.setPosition(pos.first);//colonizing a new node via black token
+					}
+				}
+			}
+	}

@@ -1,0 +1,43 @@
+package zw.scotlandyardapp.app;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class MisterXTest {
+
+	@Test
+	public void testMove() {
+		MisterX x = new MisterX();
+		x.generateTransportMode("london.map");
+		x.getMap();
+		x.setPosition(58);
+		assertEquals(58,x.getPosition());
+		assertEquals("MisterX",x.getRole());
+		x.move();
+		assertEquals(true,x.getPosition() == 77 ||x.getPosition() == 74||x.getPosition() == 75||x.getPosition() == 45||x.getPosition() == 57 ||x.getPosition() ==46|| x.getPosition() ==44 || x.getPosition() == 59 );
+	}
+
+	@Test
+	public void testPrintLog() {
+		MisterX x = new MisterX();
+		x.generateTransportMode("london.map");
+		x.getMap();
+		x.setPosition(33);
+		assertEquals(33,x.getPosition());
+		assertEquals("MisterX",x.getRole());
+		for(int i = 0; i < 5; i++){
+			x.printLog();
+			x.move();
+		}
+		assertEquals(1,x.getLog().size());
+	}
+
+	@Test
+	public void testGenerateTransportMode() {
+		MisterX x = new MisterX();
+		x.generateTransportMode("london.map");
+		assertEquals(468,x.getTmode().size());
+	}
+
+}
