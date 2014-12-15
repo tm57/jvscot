@@ -1,6 +1,8 @@
-Tinashe Matate
-Java Assignment 4
-Scotlandyard game
+#Tinashe Matate
+#Prof.Jürgen Schönwälder
+#Jacobs University Bremen
+#Java Assignment 4
+#Scotlandyard game
 #note,this is work in progress,at the moment the game is only played in a simulated way,it will be improved to allowed interactive play(game reality)
 
 In this folder you will find a make file to reconstruct the .jar file using maven and also to run the .jar file by just doing 
